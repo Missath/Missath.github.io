@@ -36,8 +36,8 @@
 
                         <form name="connform" action="" onsubmit="return MQTTconnect()">
                    
-                   Server:  <input type="text" name="server"><br><br>
-                   Port:    <input type="text" name="port"><br><br>
+                   Server:  <input type="text" name="server" value="test.mosquitto.org"><br><br>
+                   Port:    <input type="text" name="port" value="8080"><br><br>
                    Clean Session: <input type="checkbox" name="clean_sessions" value="true" checked><br><br>
                    <input name="conn" type="submit" value="Start">
                    <input TYPE="button" name="discon" value="End" onclick="disconnect()">
@@ -66,23 +66,7 @@
 
         </script>
     </div>
-    Status Messages:
-<div id="status_messages">
-</div>
-Received Messages:
 
-<div id="out_messages">
-</div>
-	<script>
-	var connected_flag=0	
-	var mqtt;
-    var reconnectTimeout = 2000;
-	var host="test.mosquitto.org";
-	var port=8080;
-	var row=0;
-	var out_msg="";
-	var mcount=0;
-	</script>
 </body>
 
 </html>
