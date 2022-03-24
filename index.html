@@ -4,7 +4,7 @@
 <head>
     <title>Maps</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
+
 
     <script src="mqtt.js"></script>
     <link rel="StyleSheet" type="text/css" href="{{ url_for('static',filename='/StyleSheet.css') }}">
@@ -28,18 +28,23 @@
 <body>
     <nav class='navbar navbar-expand bg-dark navbar-dark navbar-fixed-top '>
         <div class="container-fluid">
-            <h1 class="inline-text navbar-header">Calgary's Building Permit Search</h1>
-            <form autocomplete="off" class="form-inline navbar-form mx-auto" action="/" method="POST">
-                <div class="input-group form-group input-daterange">
-                    <input id="start" name="start" class="form-control mr-2" placeholder="Start Date" type="text" />
-                    <span class="fa fa-calendar" id="fa-1"></span>
-                    <input id="end" name="end" class="form-control ml-2" placeholder="End Date" type="text" />
-                    <span class="fa fa-calendar" id="fa-2"></span>
+            <h1 class="inline-text navbar-header">Temperature Map</h1>
+            <table>
+                <tr>
+                    <td id="connect" width="300" >
 
-                    <button class="input-group-btn btn btn-outline-success ml-2 mb-2" type="submit">Search</button>
-
-                </div>
-            </form>
+                        <form name="connform" action="" onsubmit="return MQTTconnect()">
+                   
+                   Server:  <input type="text" name="server"><br><br>
+                   Port:    <input type="text" name="port"><br><br>
+                   Clean Session: <input type="checkbox" name="clean_sessions" value="true" checked><br><br>
+                   <input name="conn" type="submit" value="Start">
+                   <input TYPE="button" name="discon" value="End" onclick="disconnect()">
+                   </form>
+                   </td>
+                </tr>
+            </table>
+        
         </div>
     </nav>
 
