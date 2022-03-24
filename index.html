@@ -10,33 +10,49 @@
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
         integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
         crossorigin=""></script>
-        <style>
-            #mapid {
+    <style>
+        #mapid {
             width: 960px;
-            height:500px;
-            }
-          </style>
+            height: 500px;
+        }
+    </style>
 
 </head>
 
 <body>
+    <nav class='navbar navbar-expand bg-dark navbar-dark navbar-fixed-top '>
+        <div class="container-fluid">
+            <h1 class="inline-text navbar-header">Calgary's Building Permit Search</h1>
+            <form autocomplete="off" class="form-inline navbar-form mx-auto" action="/" method="POST">
+                <div class="input-group form-group input-daterange">
+                    <input id="start" name="start" class="form-control mr-2" placeholder="Start Date" type="text" />
+                    <span class="fa fa-calendar" id="fa-1"></span>
+                    <input id="end" name="end" class="form-control ml-2" placeholder="End Date" type="text" />
+                    <span class="fa fa-calendar" id="fa-2"></span>
 
-    <div id="mapid"></div>
-    <p> tests </p>
+                    <button class="input-group-btn btn btn-outline-success ml-2 mb-2" type="submit">Search</button>
 
-    <script>
-        var map = L.map('mapid').setView([51.04, -114.05], 13);
+                </div>
+            </form>
+        </div>
+    </nav>
+    <div id="mapid">
 
-        L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
-            attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-            maxZoom: 18,
-            id: 'mapbox/streets-v11',
-            tileSize: 512,
-            zoomOffset: -1,
-            accessToken: 'pk.eyJ1IjoibW1hcnIiLCJhIjoiY2tsaDloN3diMGswNjJ2cXBxNXlnODdieSJ9.SpAD42Te3ZwK3j0C46fyMA'
-        }).addTo(map);
 
-    </script>
+        <script>
+            var map = L.map('mapid').setView([51.04, -114.05], 13);
+
+            L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+                attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+                maxZoom: 18,
+                id: 'mapbox/streets-v11',
+                tileSize: 512,
+                zoomOffset: -1,
+                accessToken: 'pk.eyJ1IjoibW1hcnIiLCJhIjoiY2tsaDloN3diMGswNjJ2cXBxNXlnODdieSJ9.SpAD42Te3ZwK3j0C46fyMA'
+            }).addTo(map);
+
+        </script>
+    </div>
 </body>
 
 </html>
