@@ -28,6 +28,11 @@ function onConnect() {
     console.log("on Connect " + connected_flag);
     
 }
+function disconnect()
+{
+  if (connected_flag==1)
+      mqtt.disconnect();
+}
 
 function MQTTconnect() {
     document.getElementById("messages").innerHTML = "";
