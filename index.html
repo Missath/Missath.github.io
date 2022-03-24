@@ -66,6 +66,23 @@
 
         </script>
     </div>
+    Status Messages:
+<div id="status_messages">
+</div>
+Received Messages:
+
+<div id="out_messages">
+</div>
+	<script>
+	var connected_flag=0	
+	var mqtt;
+    var reconnectTimeout = 2000;
+	var host="test.mosquitto.org";
+	var port=8080;
+	var row=0;
+	var out_msg="";
+	var mcount=0;
+	</script>
 </body>
 
 </html>
