@@ -35,12 +35,15 @@
                     <td id="connect" width="300" >
 
                         <form name="connform" action="" onsubmit="return MQTTconnect()">
+                                <label>Server: </label>
+                   <input type="text" name="server" value="test.mosquitto.org"><br><br>
+                   <label>Port: </label>
+                  <input type="text" name="port" value="8080"><br><br>
+                  <label>Clean Session: </label>
+                   <input type="checkbox" name="clean_sessions" value="true" checked><br><br>
+                   <button name="conn" type="submit" value="Start">Start</button>
+                  <button TYPE="button" name="discon" onclick="disconnect()">End</button>
                    
-                   Server:  <input type="text" name="server" value="test.mosquitto.org"><br><br>
-                   Port:    <input type="text" name="port" value="8080"><br><br>
-                   Clean Session: <input type="checkbox" name="clean_sessions" value="true" checked><br><br>
-                   <input name="conn" type="submit" value="Start">
-                   <input TYPE="button" name="discon" value="End" onclick="disconnect()">
                    </form>
                    </td>
                 </tr>
