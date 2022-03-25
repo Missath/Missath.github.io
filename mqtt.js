@@ -19,7 +19,9 @@ function onMessageArrived(r_message) {
     console.log(out_msg);
     document.getElementById("messages").innerHTML = out_msg;
 }
-
+function onConnected(recon,url){
+	console.log(" in onConnected " +reconn);
+	}
 function onConnect() {
     // Once a connection has been made, make a subscription and send a message.
     document.getElementById("messages").innerHTML = "Connected to " + host + "on port " + port;
@@ -53,7 +55,8 @@ function MQTTconnect() {
     mqtt = new Paho.MQTT.Client(host, port, cname);
     
     var options = {
-        timeout: 3,
+        timeout: 4000,
+        cleanSession: clean_sessions,
         onSuccess: onConnect,
         onFailure: onFailure,
 
@@ -61,7 +64,8 @@ function MQTTconnect() {
 
     mqtt.onConnectionLost = onConnectionLost;
     mqtt.onMessageArrived = onMessageArrived;
-   
+    mqtt.onConnected = onConnected;
+
 
     mqtt.connect(options);
     return false;
