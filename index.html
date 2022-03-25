@@ -32,26 +32,39 @@
             <div id="status">Connection Status: Not Connected</div>
             <table>
                 <tr>
-                    <td id="connect" width="300" >
+                    <td id="connect" width="300">
 
                         <form name="connform" action="" onsubmit="return MQTTconnect()">
-                                <label>Server: </label>
-                   <input type="text" name="server" value="test.mosquitto.org"><br><br>
-                   <label>Port: </label>
-                  <input type="text" name="port" value="8080"><br><br>
-                  <label>Clean Session: </label>
-                   <input type="checkbox" name="clean_sessions" value="true" checked><br><br>
-                   <button name="conn" type="submit" value="Start">Start</button>
-                  <button TYPE="button" name="discon" onclick="disconnect()">End</button>
-                   
-                   </form>
-                   </td>
+                            <label>Server: </label>
+                            <input type="text" name="server" value="test.mosquitto.org"><br><br>
+                            <label>Port: </label>
+                            <input type="text" name="port" value="8080"><br><br>
+                            <label>Clean Session: </label>
+                            <input type="checkbox" name="clean_sessions" value="true" checked><br><br>
+                            <button name="conn" type="submit" value="Start">Start</button>
+                            <button TYPE="button" name="discon" onclick="disconnect()">End</button>
+
+                        </form>
+                    </td>
                 </tr>
             </table>
-        
+
         </div>
     </nav>
-
+    <div class="container">
+        <form name="smessage" action="" onsubmit="return send_message()">
+            <label>Message: </label>
+            <input type="text" name="message"><br><br>
+            <label>Publish Topic: </label>
+            <input type="text" name="Ptopic"><br><br>
+            <button type="submit">Submit</button>
+            <input type="submit" value="Submit">
+        </form>
+    </div>
+    <div id="status_messages"></div>
+    <label>Recieved Messages:</label>
+    <div id="out_messages"></div>
+    
     <div id="mapid">
 
 
