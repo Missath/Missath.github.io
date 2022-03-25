@@ -150,9 +150,7 @@
                 document.getElementById("status_messages").innerHTML = out_msg;
                 return false;
             }
-            var pqos = parseInt(document.forms["smessage"]["pqos"].value);
-            if (pqos > 2)
-                pqos = 0;
+           ;
             var msg = document.forms["smessage"]["message"].value;
             console.log(msg);
             document.getElementById("status_messages").innerHTML = "Sending message  " + msg;
@@ -177,66 +175,80 @@
 
     </script>
 
-<style>
-    #mapid {
-    height: 400px;
-    width: 425px;
-}
-.navbar{
-    justify-content: center;
-    
-}
-body{
-    background-color: aqua;
-}
-</style>
+    <style>
+        #mapid {
+            height: 400px;
+            width: 425px;
+        }
+
+        .navbar {
+            justify-content: center;
+
+        }
+
+        body {
+            background-color: aqua;
+        }
+    </style>
 </head>
 
 <body>
 
 
 
-    <nav class='navbar navbar-expand bg-dark navbar-dark navbar-fixed-top '>
-        <div class="container-fluid ">
-            <h1 class="inline-text navbar-header">Temperature Map</h1>
+    <br>
+<table>
+<tr>
 
+<td id="connect" width="300" >
 
-        </div>
-    </nav>
-    <div class="container">
-        <label>Connection Status: </label>
-        <div id="status"></div>
-        <table>
-            <tr>
-                <td id="connect" width="300">
+	 <form name="connform" action="" onsubmit="return MQTTconnect()">
 
-                    <form name="connform">
-                        <label>Server: </label>
-                        <input type="text" name="server" value="test.mosquitto.org"><br><br>
-                        <label>Port: </label>
-                        <input type="text" name="port" value="8080"><br><br>
-                        <label>Clean Session: </label>
-                        <input type="checkbox" name="clean_sessions" value="true" checked><br><br>
-                        <button name="conn" type="submit" action="" onsubmit="return MQTTconnect()">Start</button>
-                        <button TYPE="button" name="discon" onclick="disconnect()">End</button>
+Server:  <input type="text" name="server"><br><br>
+Port:    <input type="text" name="port"><br><br>
+Clean Session: <input type="checkbox" name="clean_sessions" value="true" checked><br><br>
+Username: <input type="text" name="username" value=""><br><br>
+Password: <input type="text" name="password" value=""><br><br>
+<input name="conn" type="submit" value="Connect">
+<input TYPE="button" name="discon " value="DisConnect" onclick="disconnect()">
+</form>
+</td>
+<td id="subscribe" width="300">
+<form name="subs" action="" onsubmit="return sub_topics()">
+Subscribe Topic:   <input type="text" name="Stopic"><br>
+Subscribe QOS:   <input type="text" name="sqos" value="0"><br>
+<input type="submit" value="Subscribe">
+</form> 
+</td>
+<td id="publish" width="300">
+<form name="smessage" action="" onsubmit="return send_message()">
 
-                    </form>
-                </td>
-            </tr>
-        </table>
-        <form name="smessage" action="" onsubmit="return send_message()">
-            <label>Message: </label>
-            <input type="text" name="message"><br><br>
-            <label>Publish Topic: </label>
-            <input type="text" name="Ptopic"><br><br>
-            <button type="submit">Submit</button>
-            <input type="submit" value="Submit">
-        </form>
-    </div>
-    <div id="status_messages"></div>
-    <label>Recieved Messages:</label>
-    <div id="out_messages"></div>
+Message: <input type="text" name="message"><br><br>
+Publish Topic:   <input type="text" name="Ptopic"><br><br>
+Publish QOS:   <input type="text" name="pqos" value="0"><br>
+Retain Message:   <input type="checkbox" name="retain" value="true" ><br>
+<input type="submit" value="Submit">
+</form>
+</td>
+</tr>
+</table>
+Status Messages:
+<div id="status_messages">
+</div>
+Received Messages:
 
+<div id="out_messages">
+</div>
+	<script>
+	var connected_flag=0	
+	var mqtt;
+    var reconnectTimeout = 2000;
+	var host="192.168.1.157";
+	var port=9001;
+	var row=0;
+	var out_msg="";
+	var mcount=0;
+	</script>
     <div class="container-fluid justify-content-center" id="mapid">
 
 
