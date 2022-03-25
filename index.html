@@ -73,9 +73,9 @@
 
         function MQTTconnect() {
             var clean_sessions = document.forms["connform"]["clean_sessions"].value;
-            var user_name = document.forms["connform"]["username"].value;
+           
             console.log("clean= " + clean_sessions);
-            var password = document.forms["connform"]["password"].value;
+           
 
             if (clean_sessions = document.forms["connform"]["clean_sessions"].checked)
                 clean_sessions = true
@@ -107,11 +107,7 @@
                 onFailure: onFailure,
 
             };
-            if (user_name != "")
-                options.userName = document.forms["connform"]["username"].value;
-            if (password != "")
-                options.password = document.forms["connform"]["password"].value;
-
+            
             mqtt.onConnectionLost = onConnectionLost;
             mqtt.onMessageArrived = onMessageArrived;
             mqtt.onConnected = onConnected;
@@ -207,8 +203,7 @@
 Server:  <input type="text" name="server"><br><br>
 Port:    <input type="text" name="port"><br><br>
 Clean Session: <input type="checkbox" name="clean_sessions" value="true" checked><br><br>
-Username: <input type="text" name="username" value=""><br><br>
-Password: <input type="text" name="password" value=""><br><br>
+
 <input name="conn" type="submit" value="Connect">
 <input TYPE="button" name="discon " value="DisConnect" onclick="disconnect()">
 </form>
