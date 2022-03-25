@@ -27,9 +27,14 @@
 
 <body>
     <nav class='navbar navbar-expand bg-dark navbar-dark navbar-fixed-top '>
-        <div class="container-fluid">
+        <div class="container-fluid justify-content-center bg-dark">
             <h1 class="inline-text navbar-header">Temperature Map</h1>
-            <div id="status">Connection Status: Not Connected</div>
+            
+
+        </div>
+    </nav>
+    <div class="container">
+        <div id="status">Connection Status: Not Connected</div>
             <table>
                 <tr>
                     <td id="connect" width="300">
@@ -48,10 +53,6 @@
                     </td>
                 </tr>
             </table>
-
-        </div>
-    </nav>
-    <div class="container">
         <form name="smessage" action="" onsubmit="return send_message()">
             <label>Message: </label>
             <input type="text" name="message"><br><br>
@@ -64,7 +65,7 @@
     <div id="status_messages"></div>
     <label>Recieved Messages:</label>
     <div id="out_messages"></div>
-    
+
     <div id="mapid">
 
 
