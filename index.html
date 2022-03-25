@@ -158,7 +158,7 @@
             <tr>
                 <td id="connect" width="300">
 
-                    <form name="connform" action="" onsubmit="return MQTTconnect()">
+                    <form class="form-inline"  name="connform" action="" onsubmit="return MQTTconnect()">
                         <label>Server: </label>
                         <input type="text" name="server" value="test.mosquitto.org"><br><br>
                         <label>Port: </label>
@@ -172,7 +172,7 @@
                 </td>
             </tr>
         </table>
-        <form name="smessage" action="" onsubmit="return send_message()">
+        <form class="form-inline" name="smessage" action="" onsubmit="return send_message()">
             <label>Message: </label>
             <input type="text" name="message"><br><br>
             <label>Publish Topic: </label>
