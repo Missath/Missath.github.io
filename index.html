@@ -35,7 +35,7 @@
         function onMessageArrived(r_message) {
             out_msg = "Message received " + r_message.payloadString + "<br>";
             out_msg = out_msg + "Message received Topic " + r_message.destinationName;
-           
+
             console.log(out_msg);
             document.getElementById("messages").innerHTML = out_msg;
         }
@@ -48,7 +48,7 @@
             connected_flag = 1
             document.getElementById("status").innerHTML = "Connected";
             console.log("on Connect " + connected_flag);
-   ;
+            ;
         }
 
         function MQTTconnect() {
@@ -68,7 +68,7 @@
             var x = Math.floor(Math.random() * 10000);
             var cname = "orderform-" + x;
             mqtt = new Paho.MQTT.Client(host, port, cname);
-           
+
             var options = {
                 timeout: 3,
                 onSuccess: onConnect,
@@ -78,7 +78,7 @@
 
             mqtt.onConnectionLost = onConnectionLost;
             mqtt.onMessageArrived = onMessageArrived;
-           
+
 
             mqtt.connect(options);
             return false;
@@ -165,59 +165,44 @@
 
 <body>
 
+    <h1>Websockets Using JavaScript MQTT Client</h1>
 
+    <script type="text/javascript">
+//ll
 
-    <br>
-    <table>
-        <tr>
-
-            <td id="connect" width="300">
-
-                <form name="connform" action="" onsubmit="return MQTTconnect()">
-
-                    Server: <input type="text" name="server"><br><br>
-                    Port: <input type="text" name="port"><br><br>
-
-
-                    <input name="conn" type="submit" value="Connect">
-                    <input TYPE="button" name="discon " value="DisConnect" onclick="disconnect()">
-                </form>
-            </td>
-            <td id="subscribe" width="300">
-                <form name="subs" action="" onsubmit="return sub_topics()">
-                    Subscribe Topic: <input type="text" name="Stopic"><br>
-                   
-                    <input type="submit" value="Subscribe">
-                </form>
-            </td>
-            <td id="publish" width="300">
-                <form name="smessage" action="" onsubmit="return send_message()">
-
-                    Message: <input type="text" name="message"><br><br>
-                    Publish Topic: <input type="text" name="Ptopic"><br><br>
-                   
-                    <input type="submit" value="Submit">
-                </form>
-            </td>
-        </tr>
-    </table>
-    Status Messages:
-    <div id="status_messages">
-    </div>
-    Received Messages:
-
-    <div id="out_messages">
-    </div>
+    </script>
     <script>
         var connected_flag = 0
         var mqtt;
         var reconnectTimeout = 2000;
-        var host = "192.168.1.157";
-        var port = 9001;
-        var row = 0;
-        var out_msg = "";
-        var mcount = 0;
+//var host="192.168.1.41";
+//var port=9001;
+
     </script>
+
+    <div id="status">Connection Status: Not Connected</div>
+    </div>
+    <br>
+    <form name="connform" action="" onsubmit="return MQTTconnect()">
+
+        Server: <input type="text" name="server"><br><br>
+        Port: <input type="text" name="port"><br><br>
+        <input type="submit" value="Connect">
+    </form>
+    <hr>
+    <form name="subs" action="" onsubmit="return sub_topics()">
+        Subscribe Topic: <input type="text" name="Stopic"><br><br>
+
+        <input type="submit" value="Subscribe">
+    </form>
+    <hr>
+    <form name="smessage" action="" onsubmit="return send_message()">
+
+        Message: <input type="text" name="message"><br><br>
+        Publish Topic: <input type="text" name="Ptopic"><br><br>
+        <input type="submit" value="Submit">
+    </form>
+    Messages:<p id="messages"></p>
     <div class="container-fluid justify-content-center" id="mapid">
 
 
