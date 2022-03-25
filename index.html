@@ -148,29 +148,40 @@
 
 
         <form class="form-inline" id="connect" name="connform" action="" onsubmit="return MQTTconnect()">
+            <div class="form-group mb-2">
             <label>Server: </label>
-            <input type="text" name="server" value="test.mosquitto.org"><br><br>
+            <input type="text" name="server" value="test.mosquitto.org">
+        </div>
+        <div class="form-group mb2">
             <label>Port: </label>
             <input type="text" name="port" value="8080"><br><br>
+        
             <label>Clean Session: </label>
-            <input type="checkbox" name="clean_sessions" value="true" checked><br><br>
+        
+            <input type="checkbox" name="clean_sessions" value="true" checked>
+        </div>
             <button name="conn" type="submit" value="Start">Start</button>
             <button TYPE="button" name="discon" onclick="disconnect()">End</button>
 
         </form>
 
         <form class="form-inline" name="smessage" action="" onsubmit="return send_message()">
+            <div class="form-group mb-2">
             <label>Message: </label>
-            <input type="text" name="message"><br><br>
+            <input type="text" name="message">
+        </div>
+        <div class="form-group mb-2">
             <label>Publish Topic: </label>
-            <input type="text" name="Ptopic"><br><br>
+            <input type="text" name="Ptopic">
+        </div>
             <button type="submit">Submit</button>
-            <input type="submit" value="Submit">
+            
         </form>
     </div>
-    <div id="status_messages"></div>
+    <label>Status Message:</label>
+    <p id="status_messages"></p>
     <label>Recieved Messages:</label>
-    <div id="out_messages"></div>
+    <p id="out_messages"></p>
 
     <div id="mapid">
 
