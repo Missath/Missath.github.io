@@ -194,50 +194,63 @@
     </script>
 
 
+<nav class='navbar navbar-expand bg-dark navbar-dark navbar-fixed-top '>
+    <div class="container-fluid justify-content-center bg-dark">
+        <h1 class="inline-text navbar-header">Temperature Map</h1>
+        
+
+    </div>
+</nav>
+<div class="container">
     <div id="status">Connection Status: Not Connected</div>
+        <table>
+            <tr>
+                <td id="connect" width="300">
 
-    <br>
-    <table>
-        <tr>
+                    <form name="connform" action="" onsubmit="return MQTTconnect()">
+                        <label>Server: </label>
+                        <input type="text" name="server" value="test.mosquitto.org"><br><br>
+                        <label>Port: </label>
+                        <input type="text" name="port" value="8080"><br><br>
+                        <label>Clean Session: </label>
+                        <input type="checkbox" name="clean_sessions" value="true" checked><br><br>
+                        <button name="conn" type="submit" value="Start">Start</button>
+                        <button TYPE="button" name="discon" onclick="disconnect()">End</button>
 
-            <td id="connect" width="300">
+                    </form>
+                </td>
+            </tr>
+        </table>
+    <form name="smessage" action="" onsubmit="return send_message()">
+        <label>Message: </label>
+        <input type="text" name="message"><br><br>
+        <label>Publish Topic: </label>
+        <input type="text" name="Ptopic"><br><br>
+        <button type="submit">Submit</button>
+        <input type="submit" value="Submit">
+    </form>
+</div>
+<div id="status_messages"></div>
+<label>Recieved Messages:</label>
+<div id="out_messages"></div>
 
-                <form name="connform" action="" onsubmit="return MQTTconnect()">
+<div class="container-fluid justify-content-center" id="mapid">
 
-                    Server: <input type="text" name="server"><br><br>
-                    Port: <input type="text" name="port"><br><br>
-                    Clean Session: <input type="checkbox" name="clean_sessions" value="true" checked><br><br>
-                   
-                    <input name="conn" type="submit" value="Connect">
-                    <input TYPE="button" name="discon " value="DisConnect" onclick="disconnect()">
-                </form>
-            </td>
-            <td id="subscribe" width="300">
-                <form name="subs" action="" onsubmit="return sub_topics()">
-                    Subscribe Topic: <input type="text" name="Stopic"><br>
-                    Subscribe QOS: <input type="text" name="sqos" value="0"><br>
-                    <input type="submit" value="Subscribe">
-                </form>
-            </td>
-            <td id="publish" width="300">
-                <form name="smessage" action="" onsubmit="return send_message()">
 
-                    Message: <input type="text" name="message"><br><br>
-                    Publish Topic: <input type="text" name="Ptopic"><br><br>
-                    Publish QOS: <input type="text" name="pqos" value="0"><br>
-                    Retain Message: <input type="checkbox" name="retain" value="true"><br>
-                    <input type="submit" value="Submit">
-                </form>
-            </td>
-        </tr>
-    </table>
-    Status Messages:
-    <div id="status_messages">
-    </div>
-    Received Messages:
+    <script>
+        var map = L.map('mapid').setView([51.04, -114.05], 20);
 
-    <div id="out_messages">
-    </div>
+        L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+            attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+            maxZoom: 18,
+            id: 'mapbox/streets-v11',
+            tileSize: 512,
+            zoomOffset: -1,
+            accessToken: 'pk.eyJ1IjoibW1hcnIiLCJhIjoiY2tsaDloN3diMGswNjJ2cXBxNXlnODdieSJ9.SpAD42Te3ZwK3j0C46fyMA'
+        }).addTo(map);
+
+    </script>
+</div>
 
 </body>
 
