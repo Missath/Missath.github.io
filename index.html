@@ -8,7 +8,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.1/mqttws31.min.js"
         type="text/javascript"></script>
     <!-- <script src="mqtt.js"></script> -->
-    <link rel="StyleSheet" type="text/css" href="{{ url_for('static',filename='/StyleSheet.css') }}">
+    <link rel="StyleSheet" type="text/css" href="static/StyleSheet.css'">
 
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
         integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
@@ -176,12 +176,12 @@
 
 
     </script>
- 
+
 
 </head>
 
 <body>
- 
+
 
 
     <nav class='navbar navbar-expand bg-dark navbar-dark navbar-fixed-top '>
@@ -197,14 +197,14 @@
             <tr>
                 <td id="connect" width="300">
 
-                    <form name="connform" >
+                    <form name="connform">
                         <label>Server: </label>
                         <input type="text" name="server" value="test.mosquitto.org"><br><br>
                         <label>Port: </label>
                         <input type="text" name="port" value="8080"><br><br>
                         <label>Clean Session: </label>
                         <input type="checkbox" name="clean_sessions" value="true" checked><br><br>
-                        <button name="conn" type="submit"  action="" onsubmit="return MQTTconnect()">Start</button>
+                        <button name="conn" type="submit" action="" onsubmit="return MQTTconnect()">Start</button>
                         <button TYPE="button" name="discon" onclick="disconnect()">End</button>
 
                     </form>
