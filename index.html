@@ -151,7 +151,34 @@
             shadowSize: [41, 41]
         });
 
-        
+        function updateMap(msg) {
+            try {
+                var tmpStr = JSON.stringify(msg);
+                document.getElementById("messages").innerHTML = tmpStr;
+                var tmpJSON = JSON.parse(msg);
+                var la = tmpJSON.latitude;
+                var lo = tmpJSON.longitude;
+                var t = tmpJSON.temperature;
+                document.getElementById("messages").innerHTML = "Received GeoJSON - Latitude: " + la + " | Longitude: " + lo + " | Temperature: " + t;
+
+                if (t < 10) {
+                    //Blue
+                    var marker = L.marker([la, lo], { icon: blueIcon });
+                } else if (t > 29) {
+                    //Red
+                    var marker = L.marker([la, lo], { icon: redIcon });
+                } else {
+                    //Green
+                    var marker = L.marker([la, lo], { icon: greenIcon });
+                }
+                marker.bindPopup("Temperature: " + t + " degrees");
+                marker.addTo(map);
+            } catch (e) {
+                console.log(e);
+                document.getElementById("messages").innerHTML = "Invalid JSON file for app map.";
+                console.log("Invalid JSON file for app map.");
+            }
+        }
 
     </script>
 </body>
