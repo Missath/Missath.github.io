@@ -102,3 +102,48 @@ function send_message() {
     return false;
 }
 
+function shareStatus() {
+    const status = document.querySelector('status')
+
+    function success(pos) {
+        const latitude = position.coords.latitude;
+        const longitude = position.coords.longitude;
+        status.textContent = '';
+        var temperature = Math.floor((Math.random() * 101) - 40);
+
+        var lat = latitude.toString();
+        var lon = longitude.toString();
+        var temp = temperature.toString();
+
+        var geojson = '{"latitude": ' + lat + ', "longitude": ' + lon + ', "temperature": ' + temp + '}';
+
+        document.getElementById("status").innerHTML = "";
+
+
+        var name = document.forms["stat"]["yrname"].value;
+        if (name == "") {
+            name = "michael_shi";
+        }
+        var course = document.forms["stat"]["yName"].value;
+        if (course == "") {
+            course = "ENGO651";
+        }
+        var topic = course + "/" + name + "/my_temperature";
+        var msgjson = new Paho.MQTT.Message(geojson);
+        msgjson.destinationName = topic;
+
+        mqtt.send(msgjson);
+        console.log("Message: " + geojson + " sent to " + topic)
+        document.getElementById("mstatus").innerHTML = "GeoJSON: " + geojson + " sent to " + topic;
+    }
+    function error() {
+        status.textContent = 'Unable to retrieve your location';
+    }
+
+    if (!navigator.geolocation) {
+        status.textContent = 'Geolocation is not supported by your browser';
+    } else {
+        status.textContent = 'Locating…';
+        navigator.geolocation.getCurrentPosition(success, error);
+    }
+}
