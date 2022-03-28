@@ -123,7 +123,7 @@
 </head>
 
 <body>
-    <nav class="navbar fixed-top navbar-dark bg-dark justify-content-between">
+    <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark justify-content-between">
         <h1>Map of Temperature</h1>
     </nav>
     
@@ -141,7 +141,7 @@
     </div>
     <div class="container">
         <div class="row">
-            <form name="connform" action="" onsubmit="MQTTconnect()">
+            <form name="connform" action="" onsubmit="return MQTTconnect()">
                 <label>Server:</label>
                 <input type="text" name="server">
 
@@ -157,7 +157,7 @@
             </form>
         </div>
         <div class="row">
-            <form name="subs" action="" onsubmit="sub_topics()">
+            <form name="subs" action="" onsubmit="return sub_topics()">
                 <label> Subscrite Topic:</label>
                 <input type="text" name="Stopic">
                 <div class="row">
@@ -166,7 +166,7 @@
             </form>
         </div>
         <div class="row">
-            <form name="smessage" action="" onsubmit="send_message()">
+            <form name="smessage" action="" onsubmit="return send_message()">
                 <label>Message:</label>
                 <input type="text" name="message">
                 <div class="row">
