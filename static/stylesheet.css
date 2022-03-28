@@ -2,10 +2,10 @@
   position: absolute;
   height: 400 px;
   width: 600 px;
-  top: 200px;
+  top: 350px;
   bottom: 0;
-  left: 50px;
-  right: 0;
+  left: 15px;
+  right: 15px;
   z-index: 0;
 }
 
@@ -13,6 +13,8 @@
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
+  background-color: #292b2c;
+  color: white;
 }
 
 body {
