@@ -21,10 +21,12 @@
 
     <style>
         #mapid {
-            position: relative;
-            height: 400 px;
-            width: 600 px;
-            margin-top: 10px;
+            
+           position: relative;
+           width: fit-content;
+           height: 400px;
+           margin-top: 70px;
+          
         }
 
         body {
@@ -35,31 +37,32 @@
 </head>
 
 <body>
-    <nav class="navbar fixed-top  navbar-dark bg-dark justify-content-between">
+    
         <h1>Lab 4</h1>
-    </nav>
+    
 
-    <div id="status">Connection Status: Not Connected</div>
+
     </div>
-    <div class="container ">
-        <div class="row">
-            <div class="col">
+    <div class="container-fluid  ">
+        <div id="status">Connection Status: Not Connected</div>
+        <div class="row p-3 ">
+            <div class="col p-3">
                 <form name="connform" action="" onsubmit="return MQTTconnect()">
                     <label>Server:</label>
                     <input type="text" value="test.mosquitto.org" name="server">
-                    <div class="row">
+                    <div class="row p-3">
                         <label>Port:</label>
                         <input type="text" value="8081" name="port">
                     </div>
-                    <div class="row">
+                    <div class="row p-3">
                         <input type="submit" value="Start">
                         <input type="button" name="discon" value="End" onclick="disconnect()">
                     </div>
                 </form>
             </div>
         </div>
-        <div class="row">
-            <div class="col">
+        <div class="row p-3">
+            <div class="col p-3">
                 <form name="subs" action="" onsubmit="return sub_topics()">
                     <label> Subscribe to Topic:</label>
 
@@ -71,8 +74,8 @@
                 </form>
             </div>
         </div>
-        <div class="row">
-            <div class="col">
+        <div class="row p-3">
+            <div class="col p-3">
                 <form name="smessage" action="" onsubmit="return send_message()">
                     <label>Message:</label>
                     <input type="text" name="message">
@@ -84,17 +87,17 @@
                 </form>
             </div>
         </div>
-        <div class="row">
-            <div class="col">
+        <div class="row p-3">
+            <div class="col p-3">
                 <label>Messages:</label>
                 <p id="messages"></p>
             </div>
         </div>
-        <div class="row">
+        <div class="row p-3">
             <form id="mapStatus">
                 <label for="corName">Course: </label>
                 <input type="text" name="crsName" value="ENGO651">
-                <div class="row">
+                <div class="row p-3">
                     <label for="yourName">Your Name: </label>
                     <input type="text" name="yName" value="Marissa_Hamilton">
                 </div>
@@ -107,6 +110,7 @@
 
     <!-- The map component -->
     <div id="mapid"></div>
+
     <script>
         var map = L.map('mapid').setView([51.05, -114.07], 10);
 

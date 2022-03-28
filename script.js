@@ -102,4 +102,3 @@ function send_message() {
     return false;
 }
 
-//Map
