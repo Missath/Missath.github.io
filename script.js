@@ -8,19 +8,41 @@ function onConnectionLost() {
     document.getElementById("messages").innerHTML = "";
     connected_flag = 0;
 }
-function onFailure(message) {
+function onFailure(msg) {
     console.log("Failed");
-    document.getElementById("messages").innerHTML = "Connection Failed- Retrying";
+    document.getElementById("messages").innerHTML = "Connection Failed - Retrying";
     setTimeout(MQTTconnect, reconnectTimeout);
 }
-function onMessageArrived(rec_message) {
-    out_msg = "Message received " + rec_message.payloadString + " " + "<br>" ;
-    out_msg = out_msg + "Message received Topic " + rec_message.destinationName + " " + "<br>";
-
-    console.log(out_msg);
-    document.getElementById("messages").innerHTML = out_msg;
+function onMessageArrived(rec_msg) {
+    //var rec = rec_msg.payloadString;
+    if(isJson(rec_msg.payloadString)){
+        
+        updateMap(rec_msg.payloadString);
+    } else {
+        message = tmpVar;
+        document.getElementById("messages").innerHTML = message;
+        console.log("Received: " + message);
+    }
 }
 
+function isJson(msg) {
+    console.log(msg);
+    msg = typeof msg !== "string"
+        ? JSON.stringify(msg)
+        : msg;
+
+    try {
+        msg = JSON.parse(msg);
+    } catch (e) {
+        return false;
+    }
+
+    if (typeof msg === "object" && msg !== null) {
+        return true;
+    }
+
+    return false;
+}
 function onConnect() {
     document.getElementById("messages").innerHTML = "Connected to " + host + " on port " + port;
     connected_flag = 1
@@ -47,8 +69,8 @@ function MQTTconnect() {
         console.log("host");
     }
     console.log("connecting to " + host + " " + port);
-    var x = Math.floor(Math.random() * 10000);
-    var cname = "orderform-" + x;
+    var ranNum = Math.floor(Math.random() * 1000);
+    var cname = "ClientName-" + ranNum;
     mqtt = new Paho.MQTT.Client(host, port, cname);
    
     var options = {
@@ -71,7 +93,7 @@ function MQTTconnect() {
 function sub_topics() {
     document.getElementById("messages").innerHTML = "";
     if (connected_flag == 0) {
-        out_msg = "Not Connected so can't subscribe"
+        out_msg = "Not Connected: so can't subscribe"
         console.log(out_msg);
         document.getElementById("messages").innerHTML = out_msg;
         return false;
@@ -79,12 +101,13 @@ function sub_topics() {
     var stopic = document.forms["subs"]["Stopic"].value;
     console.log("Subscribe to topic = " + stopic);
     mqtt.subscribe(stopic);
+    updateMap
     return false;
 }
 function send_message() {
     document.getElementById("messages").innerHTML = "";
     if (connected_flag == 0) {
-        out_msg = "<Not Connected so can't send"
+        out_msg = "Not Connected: can't send"
         console.log(out_msg);
         document.getElementById("messages").innerHTML = out_msg;
         return false;
@@ -149,25 +172,24 @@ var redIcon = new L.Icon({
 
 function updateMap(msg) {
     try {
-        var tmpStr = JSON.stringify(msg);
-        document.getElementById("messages").innerHTML = tmpStr;
-        var tmpJSON = JSON.parse(msg);
-        var la = tmpJSON.latitude;
-        var lo = tmpJSON.longitude;
-        var t = tmpJSON.temperature;
-        document.getElementById("messages").innerHTML = "Received GeoJSON - Latitude: " + la + " | Longitude: " + lo + " | Temperature: " + t;
+        
+        var temp = JSON.parse(msg);
+        var lat = temp.latitude;
+        var lon = temp.longitude;
+        var temp = temp.temperature;
+        document.getElementById("messages").innerHTML = "Received GeoJSON: {Latitude: " + lat + "Longitude: " + lon + " Temperature: " + temp +"}";
 
-        if (t < 10) {
+        if (temp < 10) {
             //Blue
-            var marker = L.marker([la, lo], { icon: blueIcon });
-        } else if (t > 29) {
+            var marker = L.marker([lat, lon], { icon: blueIcon });
+        } else if (temp > 29) {
             //Red
-            var marker = L.marker([la, lo], { icon: redIcon });
+            var marker = L.marker([lat, lon], { icon: redIcon });
         } else {
             //Green
-            var marker = L.marker([la, lo], { icon: greenIcon });
+            var marker = L.marker([lat, lon], { icon: greenIcon });
         }
-        marker.bindPopup("Temperature: " + t + " degrees");
+        marker.bindPopup("Temperature: " + temp + String.fromCharCode(176));
         marker.addTo(map);
     } catch (e) {
         console.log(e);
@@ -177,13 +199,35 @@ function updateMap(msg) {
 }
 
 function shareStatus() {
-    const status = document.querySelector('#mapStatus');
+    const message = document.querySelector('#mapStatus');
 
-    function success(pos) {
-        const latitude = position.coords.latitude;
-        const longitude = position.coords.longitude;
-        status.textContent = '';
-        var temperature = Math.floor((Math.random() * 101) - 40);
+    // check if the Geolocation API is supported
+    if (!navigator.geolocation) {
+        message.textContent = `Your browser doesn't support Geolocation`;
+        message.classList.add('error');
+        return;
+    }
+
+    // handle click event
+    const btn = document.querySelector('#shareMyStatus');
+    btn.addEventListener('click', function () {
+        
+        navigator.geolocation.getCurrentPosition(onSuccess, onError);
+    });
+    //Get randome temperature
+    
+    function getRndInteger(min, max) {
+        return Math.floor(Math.random() * (max - min + 1) ) + min;
+      }
+    //If navigator get location is successful
+    function onSuccess(position) {
+        const {
+            latitude,
+            longitude
+        } = position.coords;
+        const min = -40;
+        const max = 60;
+        var temperature = getRndInteger(min,max)
 
         var lat = latitude.toString();
         var lon = longitude.toString();
@@ -192,7 +236,6 @@ function shareStatus() {
         var geojson = '{"latitude": ' + lat + ', "longitude": ' + lon + ', "temperature": ' + temp + '}';
 
         document.getElementById("status").innerHTML = "";
-
 
         var name = document.forms["mapStatus"]["yName"].value;
         if (name == "") {
@@ -207,18 +250,15 @@ function shareStatus() {
         msgjson.destinationName = topic;
 
         mqtt.send(msgjson);
-        console.log("Message: " + geojson + " sent to " + topic)
-        document.getElementById("mapStatus").innerHTML = "GeoJSON: " + geojson + " sent to " + topic;
+        console.log("Message: " + geojson + " sent to topic: " + topic)
+        document.getElementById("messages").innerHTML = "GeoJSON: " + geojson + " sent to " + topic;
+       
+        
     }
 
-    function error() {
-        status.textContent = 'Unable to retrieve your location';
+    // handle error case
+    function onError() {
+        message.classList.add('error');
+        message.textContent = `Failed to get your location!`;
     }
-
-    if (!navigator.geolocation) {
-        status.textContent = 'Geolocation is not supported by your browser';
-    } else {
-        status.textContent = 'Locating'
-        navigator.geolocation.getCurrentPosition(success, error);
-    }
-}
+};
