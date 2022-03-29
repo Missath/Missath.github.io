@@ -25,7 +25,7 @@ function onConnect() {
     document.getElementById("messages").innerHTML = "Connected to " + host + " on port " + port;
     connected_flag = 1
     document.getElementById("status").innerHTML = "Connected";
-    console.log("on Connect " + connected_flag);
+    console.log("Connected Flag = " + connected_flag);
 
 }
 function disconnect() {
@@ -177,7 +177,7 @@ function updateMap(msg) {
 }
 
 function shareStatus() {
-    const status = document.querySelector('status')
+    const status = document.querySelector('#mapStatus');
 
     function success(pos) {
         const latitude = position.coords.latitude;
@@ -208,7 +208,7 @@ function shareStatus() {
 
         mqtt.send(msgjson);
         console.log("Message: " + geojson + " sent to " + topic)
-        document.getElementById("mstatus").innerHTML = "GeoJSON: " + geojson + " sent to " + topic;
+        document.getElementById("mapStatus").innerHTML = "GeoJSON: " + geojson + " sent to " + topic;
     }
 
     function error() {
@@ -218,7 +218,7 @@ function shareStatus() {
     if (!navigator.geolocation) {
         status.textContent = 'Geolocation is not supported by your browser';
     } else {
-        status.textContent = 'Locating…';
+        status.textContent = 'Locating'
         navigator.geolocation.getCurrentPosition(success, error);
     }
 }
