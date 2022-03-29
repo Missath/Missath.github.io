@@ -1,18 +1,21 @@
 var connected_flag = 0
 var mqtt;
 var reconnectTimeout = 2000;
-
+//if the connection is lost
 function onConnectionLost() {
     console.log("connection lost");
     document.getElementById("status").innerHTML = "Disconnected";
     document.getElementById("messages").innerHTML = "";
     connected_flag = 0;
 }
+//If there is a failure to connect
 function onFailure(msg) {
     console.log("Failed");
     document.getElementById("messages").innerHTML = "Connection Failed - Retrying";
     setTimeout(MQTTconnect, reconnectTimeout);
 }
+
+//What will occur when the message arrives
 function onMessageArrived(rec_msg) {
     //var rec = rec_msg.payloadString;
     if(isJson(rec_msg.payloadString)){
@@ -25,6 +28,8 @@ function onMessageArrived(rec_msg) {
     }
 }
 
+//Ensuring the passing message is in the correct format and doesn't contain null values
+//Used user kubosho_ from website https://stackoverflow.com/questions/9804777/how-to-test-if-a-string-is-json-or-not
 function isJson(msg) {
     console.log(msg);
     msg = typeof msg !== "string"
@@ -43,6 +48,7 @@ function isJson(msg) {
 
     return false;
 }
+//To show that there is connection to the server
 function onConnect() {
     document.getElementById("messages").innerHTML = "Connected to " + host + " on port " + port;
     connected_flag = 1
@@ -50,11 +56,14 @@ function onConnect() {
     console.log("Connected Flag = " + connected_flag);
 
 }
+//Diconnecting from broker
 function disconnect() {
     if (connected_flag == 1)
         document.getElementById("status").innerHTML = "Disconnected";
         mqtt.disconnect();
 }
+
+//connecting to MQTT Broker
 function MQTTconnect() {
     document.getElementById("messages").innerHTML = "";
     var s = document.forms["connform"]["server"].value;
@@ -91,6 +100,7 @@ function MQTTconnect() {
 
 
 }
+//Subscribing to topics
 function sub_topics() {
     document.getElementById("messages").innerHTML = "";
     if (connected_flag == 0) {
@@ -100,11 +110,13 @@ function sub_topics() {
         return false;
     }
     var stopic = document.forms["subs"]["Stopic"].value;
+    document.getElementById("messages").innerHTML ="Subscribe to topic = " + stopic;
     console.log("Subscribe to topic = " + stopic);
     mqtt.subscribe(stopic);
     
     return false;
 }
+//Sending the message from the publish input
 function send_message() {
     document.getElementById("messages").innerHTML = "";
     if (connected_flag == 0) {
@@ -125,7 +137,7 @@ function send_message() {
     mqtt.send(message);
     return false;
 }
-
+//Creating the map
 const mapDiv = document.getElementById("mapid");
 var map = L.map('mapid').setView([51.05, -114.07], 10);
 
@@ -142,7 +154,7 @@ const resizeObserver = new ResizeObserver(() => {
 });
 
 resizeObserver.observe(mapDiv);
-
+//Setting the icons
 //Icons are from
 //https://github.com/pointhi/leaflet-color-markers
 
@@ -170,7 +182,7 @@ var redIcon = new L.Icon({
     popupAnchor: [1, -34],
     shadowSize: [41, 41]
 });
-
+// Update the map with the collected latitudes and longitudes
 function updateMap(msg) {
     try {
         
@@ -194,8 +206,8 @@ function updateMap(msg) {
         marker.addTo(map);
     } catch (e) {
         console.log(e);
-        document.getElementById("messages").innerHTML = "Invalid JSON file for app map.";
-        console.log("Invalid JSON file for app map.");
+        document.getElementById("messages").innerHTML = "Invalid JSON";
+        console.log("Invalid JSON");
     }
 }
 
@@ -227,6 +239,7 @@ function shareStatus() {
             latitude,
             longitude
         } = position.coords;
+
         const min = -40;
         const max = 60;
         var temperature = getRndInteger(min,max)
@@ -240,14 +253,13 @@ function shareStatus() {
         document.getElementById("status").innerHTML = "";
 
         var name = document.forms["mapStatus"]["yName"].value;
-        if (name == "") {
-            name = "Marissa_Hamilton";
-        }
+        
         var course = document.forms["mapStatus"]["crsName"].value;
-        if (course == "") {
-            course = "ENGO651";
+        if(name == "" || course ==""){
+            name = "Test_Name"
+            course = "Test_Course"
         }
-        var topic = course + "/" + name + "/My_Temperature";
+        topic = course + "/" + name + "/My_Temperature";
         var msgjson = new Paho.MQTT.Message(geojson);
         msgjson.destinationName = topic;
         
