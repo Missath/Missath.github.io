@@ -76,6 +76,7 @@ function MQTTconnect() {
     var options = {
         useSSL: true,
         timeout: 4000,
+        
         onSuccess: onConnect,
         onFailure: onFailure,
 
@@ -101,7 +102,7 @@ function sub_topics() {
     var stopic = document.forms["subs"]["Stopic"].value;
     console.log("Subscribe to topic = " + stopic);
     mqtt.subscribe(stopic);
-    updateMap
+    
     return false;
 }
 function send_message() {
@@ -221,6 +222,7 @@ function shareStatus() {
       }
     //If navigator get location is successful
     function onSuccess(position) {
+
         const {
             latitude,
             longitude
@@ -248,7 +250,8 @@ function shareStatus() {
         var topic = course + "/" + name + "/My_Temperature";
         var msgjson = new Paho.MQTT.Message(geojson);
         msgjson.destinationName = topic;
-
+        
+        mqtt.subscribe(topic);
         mqtt.send(msgjson);
         console.log("Message: " + geojson + " sent to topic: " + topic)
         document.getElementById("messages").innerHTML = "GeoJSON: " + geojson + " sent to " + topic;
