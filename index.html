@@ -25,26 +25,26 @@
            
             width: 400px;
             height: 400px;
-            top: 875px;
+            top: 900px;
 
         }
 
         body {
-            padding-top: 2%;
+            padding-top: 70px;
         }
     </style>
 
 </head>
 
 <body>
-    <nav class="navbar fixed-top  navbar-dark bg-dark justify-content-center">
+    <nav class="navbar fixed-top  navbar-dark bg-dark justify-content-center mb-3">
         <h1>Lab 4</h1>
     </nav>
 
 
     </div>
-    <div class="container-fluid  ">
-        <div id="status">Connection Status: Not Connected</div>
+    <div class="container-fluid   my-auto">
+        
         <div class="row p-3 ">
             <div class="col p-3">
                 <form name="connform" action="" onsubmit="return MQTTconnect()">
@@ -59,6 +59,7 @@
                         <input type="button" name="discon" value="End" onclick="disconnect()">
                     </div>
                 </form>
+                <div id="status">Connection Status: Not Connected</div>
             </div>
         </div>
         <div class="row p-3">
@@ -90,7 +91,9 @@
         <div class="row p-3">
             <div class="col p-3">
                 <label>Messages:</label>
+                <div class="row">
                 <p id="messages"></p>
+            </div>
             </div>
         </div>
         <div class="row p-3">
