@@ -4,8 +4,8 @@ var reconnectTimeout = 2000;
 
 function onConnectionLost() {
     console.log("connection lost");
-    document.getElementById("status").innerHTML = "Connection Lost";
-    document.getElementById("messages").innerHTML = "Connection Lost";
+    document.getElementById("status").innerHTML = "Disconnected";
+    document.getElementById("messages").innerHTML = "";
     connected_flag = 0;
 }
 function onFailure(message) {
@@ -14,16 +14,15 @@ function onFailure(message) {
     setTimeout(MQTTconnect, reconnectTimeout);
 }
 function onMessageArrived(rec_message) {
-    out_msg = "Message received " + rec_message.payloadString + "<br>";
-    out_msg = out_msg + "Message received Topic " + rec_message.destinationName;
-    //console.log("Message received ",r_message.payloadString);
+    out_msg = "Message received " + rec_message.payloadString + " " + "<br>" ;
+    out_msg = out_msg + "Message received Topic " + rec_message.destinationName + " " + "<br>";
+
     console.log(out_msg);
     document.getElementById("messages").innerHTML = out_msg;
 }
 
 function onConnect() {
-    // Once a connection has been made, make a subscription and send a message.
-    document.getElementById("messages").innerHTML = "Connected to " + host + "on port " + port;
+    document.getElementById("messages").innerHTML = "Connected to " + host + " on port " + port;
     connected_flag = 1
     document.getElementById("status").innerHTML = "Connected";
     console.log("on Connect " + connected_flag);
@@ -31,6 +30,7 @@ function onConnect() {
 }
 function disconnect() {
     if (connected_flag == 1)
+        document.getElementById("status").innerHTML = "Disconnected";
         mqtt.disconnect();
 }
 function MQTTconnect() {
@@ -50,7 +50,7 @@ function MQTTconnect() {
     var x = Math.floor(Math.random() * 10000);
     var cname = "orderform-" + x;
     mqtt = new Paho.MQTT.Client(host, port, cname);
-    //document.write("connecting to "+ host);
+   
     var options = {
         useSSL: true,
         timeout: 4000,
@@ -61,7 +61,7 @@ function MQTTconnect() {
 
     mqtt.onConnectionLost = onConnectionLost;
     mqtt.onMessageArrived = onMessageArrived;
-    //mqtt.onConnected = onConnected;
+
 
     mqtt.connect(options);
     return false;
@@ -77,14 +77,14 @@ function sub_topics() {
         return false;
     }
     var stopic = document.forms["subs"]["Stopic"].value;
-    console.log("Subscribe to topic =" + stopic);
+    console.log("Subscribe to topic = " + stopic);
     mqtt.subscribe(stopic);
     return false;
 }
 function send_message() {
     document.getElementById("messages").innerHTML = "";
     if (connected_flag == 0) {
-        out_msg = "<b>Not Connected so can't send</b>"
+        out_msg = "<Not Connected so can't send"
         console.log(out_msg);
         document.getElementById("messages").innerHTML = out_msg;
         return false;
