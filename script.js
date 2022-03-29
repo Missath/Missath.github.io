@@ -102,6 +102,7 @@ function send_message() {
     return false;
 }
 
+const mapDiv = document.getElementById("mapid");
 var map = L.map('mapid').setView([51.05, -114.07], 10);
 
 L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
@@ -112,6 +113,11 @@ L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_toke
     zoomOffset: -1,
     accessToken: 'pk.eyJ1IjoicmF5ZWhlIiwiYSI6ImNrbHZ5NHMyejBkdXcyc214OHlvNmhrZG0ifQ.KXVOh3T-0PdiPnVQ5iMCCQ'
 }).addTo(map);
+const resizeObserver = new ResizeObserver(() => {
+    map.invalidateSize();
+});
+
+resizeObserver.observe(mapDiv);
 
 //Icons are from
 //https://github.com/pointhi/leaflet-color-markers
