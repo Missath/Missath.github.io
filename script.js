@@ -177,7 +177,7 @@ function updateMap(msg) {
         var lat = temp.latitude;
         var lon = temp.longitude;
         var temp = temp.temperature;
-        document.getElementById("messages").innerHTML = "Received GeoJSON: {Latitude: " + lat + "Longitude: " + lon + " Temperature: " + temp +"}";
+        document.getElementById("messages").innerHTML = "Published Location: {Latitude: " + lat + "Longitude: " + lon + " Temperature: " + temp +"}";
 
         if (temp < 10) {
             //Blue
