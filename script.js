@@ -102,6 +102,74 @@ function send_message() {
     return false;
 }
 
+var map = L.map('mapid').setView([51.05, -114.07], 10);
+
+L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+    attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+    maxZoom: 18,
+    id: 'mapbox/streets-v11',
+    tileSize: 512,
+    zoomOffset: -1,
+    accessToken: 'pk.eyJ1IjoicmF5ZWhlIiwiYSI6ImNrbHZ5NHMyejBkdXcyc214OHlvNmhrZG0ifQ.KXVOh3T-0PdiPnVQ5iMCCQ'
+}).addTo(map);
+
+//Icons are from
+//https://github.com/pointhi/leaflet-color-markers
+
+var greenIcon = new L.Icon({
+    iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-green.png',
+    shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+    iconSize: [25, 41],
+    iconAnchor: [12, 41],
+    popupAnchor: [1, -34],
+    shadowSize: [41, 41]
+});
+var blueIcon = new L.Icon({
+    iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-blue.png',
+    shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+    iconSize: [25, 41],
+    iconAnchor: [12, 41],
+    popupAnchor: [1, -34],
+    shadowSize: [41, 41]
+});
+var redIcon = new L.Icon({
+    iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',
+    shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+    iconSize: [25, 41],
+    iconAnchor: [12, 41],
+    popupAnchor: [1, -34],
+    shadowSize: [41, 41]
+});
+
+function updateMap(msg) {
+    try {
+        var tmpStr = JSON.stringify(msg);
+        document.getElementById("messages").innerHTML = tmpStr;
+        var tmpJSON = JSON.parse(msg);
+        var la = tmpJSON.latitude;
+        var lo = tmpJSON.longitude;
+        var t = tmpJSON.temperature;
+        document.getElementById("messages").innerHTML = "Received GeoJSON - Latitude: " + la + " | Longitude: " + lo + " | Temperature: " + t;
+
+        if (t < 10) {
+            //Blue
+            var marker = L.marker([la, lo], { icon: blueIcon });
+        } else if (t > 29) {
+            //Red
+            var marker = L.marker([la, lo], { icon: redIcon });
+        } else {
+            //Green
+            var marker = L.marker([la, lo], { icon: greenIcon });
+        }
+        marker.bindPopup("Temperature: " + t + " degrees");
+        marker.addTo(map);
+    } catch (e) {
+        console.log(e);
+        document.getElementById("messages").innerHTML = "Invalid JSON file for app map.";
+        console.log("Invalid JSON file for app map.");
+    }
+}
+
 function shareStatus() {
     const status = document.querySelector('status')
 
@@ -120,15 +188,15 @@ function shareStatus() {
         document.getElementById("status").innerHTML = "";
 
 
-        var name = document.forms["stat"]["yrname"].value;
+        var name = document.forms["mapStatus"]["yName"].value;
         if (name == "") {
-            name = "michael_shi";
+            name = "Marissa_Hamilton";
         }
-        var course = document.forms["stat"]["yName"].value;
+        var course = document.forms["mapStatus"]["crsName"].value;
         if (course == "") {
             course = "ENGO651";
         }
-        var topic = course + "/" + name + "/my_temperature";
+        var topic = course + "/" + name + "/My_Temperature";
         var msgjson = new Paho.MQTT.Message(geojson);
         msgjson.destinationName = topic;
 
@@ -136,6 +204,7 @@ function shareStatus() {
         console.log("Message: " + geojson + " sent to " + topic)
         document.getElementById("mstatus").innerHTML = "GeoJSON: " + geojson + " sent to " + topic;
     }
+
     function error() {
         status.textContent = 'Unable to retrieve your location';
     }
