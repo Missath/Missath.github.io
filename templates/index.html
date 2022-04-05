@@ -1,0 +1,28 @@
+{% extends "layout.html" %}
+
+{% block body %}
+
+<nav class="navbar navbar-expand navbar-fixed-top">
+    <div class="container-fluid justify-content-start">
+        <a class="navbar-brand" href="{{url_for('index')}}" role="button"><img
+                src="/static/Veloci-erg-ers_logo.png"></a>
+    </div>
+    <div class="container text-center">
+        <h1 class="heading ">Veloci-erg-ers</h1>
+    </div>
+
+    <div class="container-fluid justify-content-end">
+
+        <a class="btn  m-2" href="{{ url_for('login') }}" role="button">Login</a>
+        <a class="btn  m-2" href="{{ url_for('register') }}" role="button">Register</a>
+    </div>
+</nav>
+
+    <div class="statement text-center ">
+        <h3>Please either login or register to access the training map</h3>
+        <h3>Row, Row, Row your boat training web applicaiton</h3>
+        <h3>Track other members of your team to compete and ensure they are making their times</h3>
+    </div>
+<div id="indbod"></div>
+
+{% endblock %}

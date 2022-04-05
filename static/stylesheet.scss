@@ -1,0 +1,131 @@
+$myColor: maroon;
+$myBgColor: slategray;
+$color:rgb(255, 181, 17);
+
+#mapid {
+    position: absolute;
+    top: 150px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 0
+}
+
+#indbod{
+    background-image: url("Dino_rowing.jpg");
+    width: 100vw;
+    height: 100vh; 
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    position: center;
+    opacity: .3;
+}
+body{
+    background-color: $myBgColor;
+    
+
+}
+nav
+{
+overflow: auto;
+}
+
+.navbar {
+background-color: $myColor;
+color: $color;
+
+}
+
+label{
+    color:$color;
+    font-size: 24px;
+    
+}
+
+.form-row{
+    margin: 5%;
+    
+}
+.btn {
+    background-color: black;
+    outline-color: black;
+    color: white;
+   
+}
+
+.btn:hover{
+    color:$color;
+}
+
+input:hover{
+    color:$color;
+}
+.statement{
+    color:$color;
+    background-color: $myBgColor;
+}
+
+.navbar-brand {
+    padding: 0px; 
+  }
+  
+.navbar-brand>img {
+  height: 100px;
+  
+  width: auto;
+
+}
+img{
+    display: block;
+  margin-left: auto;
+  margin-right: auto;
+    max-width: 75%;
+    height: auto;
+}
+
+
+.alert {
+    position: fixed;
+    justify-content: center;
+    top: 60px;
+    left: 25%;
+    width: 50%;
+    z-index:999;
+    border-radius: 5px
+}
+
+.heading{
+    color: $color;
+    text-align: center;
+    display: inline-block;
+}
+
+img {
+    width: 50%;
+    height: auto;
+}
+
+.title{
+    background-color: $myColor;
+    color: $color;
+}
+.box1, .box2, .box3, .box4 {
+    background-color: $myColor;
+    color: $color;
+    border: 3px black;
+}
+.skill-block {
+    width: 30%
+}
+
+@media (min-width: 991px) and (max-width:1200px) {
+    .skill-block {
+        padding: 32px !important
+    }
+}
+
+@media (min-width: 1200px) {
+    .skill-block {
+        padding: 56px !important
+    }
+}

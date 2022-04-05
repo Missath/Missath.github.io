@@ -1,0 +1,12 @@
+`CMD
+pip3 install -r requirements.txt
+set FLASK_APP=application.py
+set DATABASE_URL=postgresql://qchmgsgtmtjycs:089581ab97157c5a5fb554aed52575772f333e5391943ab62eb1db3a245c9be4@ec2-44-194-113-156.compute-1.amazonaws.com:5432/dadesacmukdhfh
+
+Powershell
+$env:FLASK_APP="application.py"
+$env:DATABASE_URL="postgresql://qchmgsgtmtjycs:089581ab97157c5a5fb554aed52575772f333e5391943ab62eb1db3a245c9be4@ec2-44-194-113-156.compute-1.amazonaws.com:5432/dadesacmukdhfh"
+
+
+set FLASK_ENV=development
+python -m flask run

@@ -1,0 +1,48 @@
+{% extends "layout.html" %}
+
+{% block body %}
+{% with messages = get_flashed_messages(with_categories=true) %}
+{% if messages %}
+{% for category, message in messages %}
+<div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+    <span>{{ message }}</span>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+{% endfor %}
+{% endif %}
+{% endwith %}
+<nav class="navbar navbar-expand navbar-fixed-top justify-content-center">
+    <div class="container-fluid justify-content-start">
+        <a class="navbar-brand" href="{{url_for('index')}}" role="button"><img src="/static/Veloci-erg-ers_logo.png"></a>
+    </div>
+    <div class="container text-center">
+        <h1 class="heading "><span>Welcome to the Map</span></h1>
+    </div>
+    <div class="container-fluid justify-content-end">
+        <a class="btn  m-2" href="{{ url_for('profile') }}" role="button">Profile</a>
+        <a class="btn  m-2" href="{{ url_for('logout') }}" role="button">Logout</a>
+    </div>
+</nav>
+<div id="mapid">
+    <script>
+    var map = L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+            attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+            maxZoom: 18,
+            id: 'mapbox/streets-v11',
+            tileSize: 512,
+            zoomOffset: -1,
+            accessToken: 'pk.eyJ1IjoicmF5ZWhlIiwiYSI6ImNrbHZ5NHMyejBkdXcyc214OHlvNmhrZG0ifQ.KXVOh3T-0PdiPnVQ5iMCCQ'
+        });
+
+        
+
+        map = L.map('mapid', { layers: [map] }).setView([51.04, -114.07], 10);
+
+ 
+       
+    </script>
+</div>
+
+{% endblock %}

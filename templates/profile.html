@@ -1,0 +1,154 @@
+{% extends "layout.html" %}
+
+{% block body %}
+{% with messages = get_flashed_messages(with_categories=true) %}
+{% if messages %}
+{% for category, message in messages %}
+<div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+    <span>{{ message }}</span>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+{% endfor %}
+{% endif %}
+{% endwith %}
+
+<nav class="navbar navbar-expand navbar-fixed-top justify-content-center">
+    <div class="container-fluid justify-content-start">
+        <a class="navbar-brand" href="{{url_for('index')}}" role="button"><img
+                src="/static/Veloci-erg-ers_logo.png"></a>
+    </div>
+    <div class="container text-center">
+        <h1 class="heading "><span>Welcome {{ fname }} {{lname}}</span></h1>
+    </div>
+    <div class="container-fluid justify-content-end">
+        <a class="btn  m-2" href="{{ url_for('map') }}" role="button">Map</a>
+        <a class="btn  m-2" href="{{ url_for('logout') }}" role="button">Logout</a>
+    </div>
+</nav>
+
+
+<div class="container mt-5 mb-5">
+    <div class="row no-gutters">
+        <div class="col-md-4 col-lg-4"><img src="/static/vector-person-icon.jpg"></div>
+        <div class="col-md-8 col-lg-8">
+            <div class="d-flex flex-column">
+                <div class="d-flex flex-row justify-content-between align-items-center p-5 bg-dark text-white">
+                    <h3 class="display-5">{{ fname }} {{lname}}</h3><i class="fa fa-facebook"></i><i
+                        class="fa fa-google"></i><i class="fa fa-youtube-play"></i><i class="fa fa-dribbble"></i><i
+                        class="fa fa-linkedin"></i>
+                </div>
+                <div class="p-3 title text-white">
+                    <h6>Master Student &amp; Professional</h6>
+                </div>
+                <div class="d-flex flex-row text-white">
+                    <div class="p-4 box1 text-center skill-block">
+                        <h4># of Reps</h4>
+                        <h6>Reps</h6>
+                    </div>
+                    <div class="p-3 box2 text-center skill-block">
+                        <h4>xx:xx</h4>
+                        <h6>Workout time</h6>
+                    </div>
+                    <div class="p-3 box3 text-center skill-block">
+                        <h4>xx km</h4>
+                        <h6>Distance travelled</h6>
+                    </div>
+                    <div class="p-3 box4 text-center skill-block">
+                        <h4>rate</h4>
+                        <h6>Average Rating</h6>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container mt-5 mb-5 dropdown"></div>
+    <h2 class="heading container text-center bg-dark">Give a Rating and Write a Review on Performance<h2>
+            <div>
+                <form method="POST" class="container form-border ">
+                    <div class="form-group row bg-dark ">
+                        <div class="container form-group col-md-3 text-center">
+                            <fieldset class="form-group">
+                                <div class="row">
+                                    <legend class="heading col-form-label  m-1">Ratings</legend>
+                                    <div class=" m-1">
+                                        <div class="form-check-inline ">
+                                            <input class="form-check-input justify-content-center" type="radio"
+                                                name="rating" id="rating" for="rating" value="1" checked>
+                                            <label class="form-check-label text-center" for="rating">
+                                                1
+                                            </label>
+                                        </div>
+                                        <div class="form-check-inline">
+                                            <input class="form-check-input" type="radio" name="rating" id="rating"
+                                                for="rating" value="2">
+                                            <label class="form-check-label" for="rating">
+                                                2
+                                            </label>
+                                        </div>
+                                        <div class="form-check-inline">
+                                            <input class="form-check-input" type="radio" name="rating" id="rating"
+                                                for="rating" value="3">
+                                            <label class="form-check-label" for="rating">
+                                                3
+                                            </label>
+                                        </div>
+                                        <div class="form-check-inline">
+                                            <input class="form-check-input" type="radio" name="rating" id="rating"
+                                                for="rating" value="4">
+                                            <label class="form-check-label" for="rating">
+                                                4
+                                            </label>
+                                        </div>
+                                        <div class="form-check-inline">
+                                            <input class="form-check-input" type="radio" name="rating" id="rating"
+                                                for="rating" value="5">
+                                            <label class="form-check-label" for="rating">
+                                                5
+                                            </label>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </fieldset>
+                            <div class="form-group  ">
+                                <label class="col-form-label  m-1 " for="rating">Comment</label>
+                                <div class="input-group ">
+                                    <textarea name="comment" id="comment" class="form-control" rows="1"
+                                        required></textarea>
+                                </div>
+                            </div>
+                            <div class="form-group text-center">
+                                <button class="btn " type="submit">Submit</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <div class="text-center pt-1">
+                    <label class="heading container bg-dark">Comments</label>
+                    {% for com in comments %}
+                    <div class="list-group container">
+                        <div
+                            class="list-group-item bg-dark list-group-item-action flex-column align-items-start active">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h5 class="mb-1">User: {{com.username}}</h5>
+                                <small>Date/Time: {{com.dt}}</small>
+                                <small>rating: {{com.rating}}</small>
+                            </div>
+                            <p class="mb-1 justify-content-between">Comment: {{com.comment}}</p>
+                        </div>
+
+
+
+                        {% endfor %}
+                        <br><br><br>
+                        <div class="dropdown-divider"></div>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+            {% endblock %}

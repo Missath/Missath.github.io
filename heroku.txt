@@ -1,0 +1,14 @@
+Host
+      ec2-44-194-113-156.compute-1.amazonaws.com
+Database
+      dadesacmukdhfh
+User
+      qchmgsgtmtjycs
+Port
+      5432
+Password
+      089581ab97157c5a5fb554aed52575772f333e5391943ab62eb1db3a245c9be4
+URI
+      postgres://qchmgsgtmtjycs:089581ab97157c5a5fb554aed52575772f333e5391943ab62eb1db3a245c9be4@ec2-44-194-113-156.compute-1.amazonaws.com:5432/dadesacmukdhfh
+Heroku CLI
+heroku pg:psql postgresql-corrugated-48837 --app engo651-finalproject

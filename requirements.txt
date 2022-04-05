@@ -1,0 +1,14 @@
+Flask
+Flask-Session
+psycopg2-binary
+SQLAlchemy
+requests
+flask-RESTful
+Werkzeug
+pycodestyle
+itsdangerous
+autopep8
+aniso8601
+jwt
+Authlib
+python-dotenv

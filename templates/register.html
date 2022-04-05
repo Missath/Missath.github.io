@@ -1,0 +1,68 @@
+{% extends "layout.html" %}
+
+{% block body %}
+{% with messages = get_flashed_messages(with_categories=true) %}
+{% if messages %}
+{% for category, message in messages %}
+<div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+    <span>{{ message }}</span>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+{% endfor %}
+{% endif %}
+{% endwith %}
+
+<nav class="navbar navbar-expand navbar-fixed-top ">
+    <div class="container-fluid justify-content-start">
+        <a class="navbar-brand" href="{{url_for('index')}}" role="button"><img src="/static/Veloci-erg-ers_logo.png"></a>
+    </div>
+    <div class="container-fluid text-center">
+        <h1 class="heading text-center">Please Register</h1>
+    </div>
+    <div class="container justify-content-end">
+        <a class="btn m-2 " href="{{ url_for('login') }}" role="button">Login</a>
+    </div>
+</nav>
+
+
+
+<form action="/register" method="POST">
+    <div class="form-row">
+        <div class="col-md-4 mb-3">
+            <label for="fname">First name</label>
+            <input type="text" class="form-control" name="fname" placeholder="First name" required>
+           
+        </div>
+        <div class="col-md-4 mb-3">
+            <label for="lname">Last name</label>
+            <input type="text" class="form-control" name="lname" placeholder="Last name" required>
+            
+        </div>
+        <div class="col-md-4 mb-3">
+            <label for="username">Username</label>
+            <input type="text" class="form-control " name="username" id="username" placeholder="Username"
+                 required>
+            
+        </div>
+    </div>
+    <div class="form-row justify-content-center">
+        <div class="col-md-4 mb-3">
+            <label for="password">Password</label>
+            <input type="password" class="form-control " name="password" id="password" placeholder="Password" required>
+           
+        </div>
+        <div class="col-md-3 mb-3">
+            <label for="repass">Re-type Password</label>
+            <input type="password" class="form-control" name="repass" id="repass" placeholder="Re-type Password" required>
+          
+        </div>
+      
+    </div>
+    <div class="col-md-12 text-center">
+    <button class="btn" type="submit">Submit</button>
+    </div>
+</form>
+
+{% endblock %}
